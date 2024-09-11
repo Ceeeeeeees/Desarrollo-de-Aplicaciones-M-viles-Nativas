@@ -1,3 +1,6 @@
+/**
+ * Función principal que ejecuta la calculadora.
+ */
 fun main() {
     do {
         println("==============================================")
@@ -45,10 +48,17 @@ fun main() {
             val opcionPrincipal = readLine()!!.toString().lowercase()
     } while (opcionPrincipal == "s")
 }
-
+/**
+ * Función que realiza la suma de dos números.
+ *
+ * @param numUno El primer número a sumar.
+ * @param numDos El segundo número a sumar.
+ * @return El resultado de la suma de los dos números.
+ */
 fun suma(numUno: Double, numDos: Double): Double {
     return numUno + numDos
 }
+
 fun resta(numUno: Double, numDos: Double): Double {
     return numUno - numDos
 }
