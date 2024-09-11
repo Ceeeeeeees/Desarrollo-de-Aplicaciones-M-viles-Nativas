@@ -13,7 +13,8 @@ fun main() {
         println("5. Salir \t")
         println("Selecciona una opcion: \t")
         var opcionCalculadora: Int ?= readLine()!!.toInt()
-        val opcionMenu = when (opcionCalculadora){
+        val opcionMenu = when (opcionCalculadora){ // Se puede usar un when para asignar el valor de la variable (opcionMenu) dependiendo de la condición
+            //Similar a un switch en otros lenguajes
             1 -> {
                 println("Ingrese el primer numero: \t")
                 var numUno = readLine()!!.toDouble()
@@ -58,13 +59,33 @@ fun main() {
 fun suma(numUno: Double, numDos: Double): Double {
     return numUno + numDos
 }
-
+/**
+ * Función que realiza la resta de dos números.
+ *
+ * @param numUno El primer número.
+ * @param numDos El segundo número.
+ * @return El resultado de la resta.
+ */
 fun resta(numUno: Double, numDos: Double): Double {
     return numUno - numDos
 }
+/**
+ * Función que realiza la multiplicación de dos números.
+ *
+ * @param numUno El primer número.
+ * @param numDos El segundo número.
+ * @return El resultado de la multiplicación.
+ */
 fun multiplicacion(numUno: Double, numDos: Double): Double {
     return numUno * numDos
 }
+/**
+ * Función que realiza la división de dos números.
+ *
+ * @param numUno El primer número.
+ * @param numDos El segundo número.
+ * @return El resultado de la división.
+ */
 fun division(numUno: Double, numDos: Double): Double {
     return numUno / numDos
 }
