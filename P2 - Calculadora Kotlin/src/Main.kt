@@ -1,5 +1,11 @@
 /**
- * Función principal que ejecuta la calculadora.
+ * Función principal que ejecuta la calculadora
+ *
+ * @author Saucedo Moreno César Enrique
+ * @carnet 
+ * @group 7CV1
+ * @date 11-Septiembre-2024
+ * @version 1.0
  */
 fun main() {
     do {
@@ -20,28 +26,32 @@ fun main() {
                 var numUno = readLine()!!.toDouble()
                 println("Ingrese el segundo numero: \t")
                 val numDos = readLine()!!.toDouble()
-                println("El resultado de la suma es: ${suma(numUno, numDos)}")
+                println("La operacion a realizar es: $numUno + $numDos")
+                println("\nEl resultado es: \t${suma(numUno, numDos)}")
             }
             2 -> {
                 println("Ingrese el primer numero: \t")
                 val numUno = readLine()!!.toDouble()
                 println("Ingrese el segundo numero: \t")
                 val numDos = readLine()!!.toDouble()
-                println("El resultado de la resta es: ${resta(numUno, numDos)}")
+                println("La operacion a realizar es: $numUno - $numDos")
+                println("\nEl resultado es: \t${resta(numUno, numDos)}")
             }
             3 -> {
                 println("Ingrese el primer numero: \t")
                 val numUno = readLine()!!.toDouble()
                 println("Ingrese el segundo numero: \t")
                 val numDos = readLine()!!.toDouble()
-                println("El resultado de la multiplicacion es: ${multiplicacion(numUno, numDos)}")
+                println("La operacion a realizar es: $numUno * $numDos")
+                println("\nEl resultado es: \t${multiplicacion(numUno, numDos)}")
             }
             4 -> {
                 println("Ingrese el primer numero: \t")
                 val numUno = readLine()!!.toDouble()
                 println("Ingrese el segundo numero: \t")
                 val numDos = readLine()!!.toDouble()
-                println("El resultado de la division es: ${division(numUno, numDos)}")
+                println("La operacion a realizar es: $numUno / $numDos")
+                println("\nEl resultado es: \t${division(numUno, numDos)}")
             }
             else -> println("Opcion no valida")
         }
@@ -90,3 +100,8 @@ fun division(numUno: Double, numDos: Double): Double {
     return numUno / numDos
 }
 
+/**
+ *
+ * SMCE - 2021630676
+ *
+ */
