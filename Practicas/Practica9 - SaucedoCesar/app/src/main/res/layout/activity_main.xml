@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tituloNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:gravity="center"
+        android:text="Práctica 9 - Saucedo Cesar"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:id="@+id/tituloTienda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Tienda de Pizza con Android"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloNombre"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:id="@+id/tituloEntrega"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22.5dp"
+        android:gravity="center"
+        android:text="Programa una entrega"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloTienda"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/nombreCompleto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="Nombre Completo:"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/nombreID"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloEntrega"
+        tools:ignore="HardcodedText"/>
+
+    <EditText
+        android:id="@+id/nombreID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="30dp"
+        android:autofillHints="no"
+        android:ems="12"
+        android:hint="Ingresa tu nombre completo..."
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloEntrega"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/telefonoContacto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="Número de telefono:"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/telefonoID"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombreCompleto"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:id="@+id/preciosTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:gravity="center"
+        android:text="Precios : $99 - Chica , $120 - Mediana, $200 - Extra-Grande"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/telefonoContacto"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:id="@+id/seleccionaPizza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:text="Selecciona el tamaño de tu pizza:"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/pizzaID"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/preciosTexto"
+        tools:ignore="HardcodedText"/>
+
+    <EditText
+        android:id="@+id/telefonoID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:autofillHints="no"
+        android:ems="10"
+        android:hint="Ingresa tu número de telefono..."
+        android:inputType="phone"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombreID"
+        tools:ignore="HardcodedText" />
+
+    <SeekBar
+        android:id="@+id/pizzaID"
+        android:layout_width="152dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="5dp"
+        android:max="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/preciosTexto"
+        tools:layout_editor_absoluteY="248dp" />
+
+    <TextView
+        android:id="@+id/tamanioPizza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.805"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pizzaID" />
+
+    <Button
+        android:id="@+id/fechaBoton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="16dp"
+        android:text="Selecciona una fecha"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/horaBoton"
+        app:layout_constraintTop_toBottomOf="@+id/seleccionaPizza" />
+
+    <Button
+        android:id="@+id/horaBoton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:text="Selecciona una hora"
+        app:layout_constraintStart_toEndOf="@+id/fechaBoton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seleccionaPizza" />
+
+    <TextView
+        android:id="@+id/fechaTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:hint="Fecha..."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/horaTexto"
+        app:layout_constraintTop_toBottomOf="@+id/fechaBoton" />
+
+    <TextView
+        android:id="@+id/horaTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        android:hint="Hora..."
+        app:layout_constraintStart_toEndOf="@+id/fechaTexto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fechaBoton" />
+
+    <Button
+        android:id="@+id/programarOrdenBoton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Programar Orden"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horaTexto" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
