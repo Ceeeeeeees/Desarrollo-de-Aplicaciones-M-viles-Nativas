@@ -1,3 +1,12 @@
+/**
+ *  Práctica 9 - Ordenar Pizzas
+ *
+ *  @author Saucedo Moreno César Enrique
+ *  @group 7CV1
+ *  @date 2024-11-26
+ *  @versión 1.0
+ */
+
 package com.escom7cv1.practica9_saucedocesar
 
 import android.R
@@ -92,3 +101,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
+/**
+ *  SAUCEDO MORENO CÉSAR ENRIQUE 7CV1
+ */
