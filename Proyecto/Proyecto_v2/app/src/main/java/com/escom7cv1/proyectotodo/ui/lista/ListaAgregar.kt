@@ -7,14 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.escom7cv1.proyectotodo.databinding.FragmentHomeBinding
-import com.escom7cv1.proyectotodo.ui.lista.ListaViewModel
+import com.escom7cv1.proyectotodo.databinding.FragmentListaBinding
 
 class ListaAgregar : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private var _binding: FragmentListaBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -25,7 +22,7 @@ class ListaAgregar : Fragment() {
         val listaViewModel =
             ViewModelProvider(this).get(ListaViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentListaBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textBienvenida

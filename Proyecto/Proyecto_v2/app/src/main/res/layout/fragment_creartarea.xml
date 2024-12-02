@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.crearTarea.CrearTareaFragment">
+
+
+    <!-- Contenedor Scrollable -->
+    <android.widget.ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fillViewport="true">
+
+        <!-- Contenedor vertical para los elementos dentro del ScrollView -->
+        <LinearLayout
+            android:id="@+id/contenedorTareas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Campo para el titulo de la tarea -->
+            <EditText
+                android:id="@+id/tituloTarea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:textAlignment="center"
+                android:hint="Ingresa el nombre de la tarea"
+                android:inputType="text"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="16dp"
+                tools:ignore="HardcodedText" />
+
+            <!-- Checkbox para la urgencia de la tarea -->
+            <CheckBox
+                android:id="@+id/urgente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Urgente"
+                app:layout_constraintTop_toBottomOf="@id/tituloTarea"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp" />
+
+            <!-- Checkbox para la importancia de la tarea -->
+            <CheckBox
+                android:id="@+id/importante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Importante"
+                app:layout_constraintTop_toBottomOf="@id/urgente"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp" />
+
+            <!-- Campo para la fecha de inicio de la tarea -->
+            <EditText
+                android:id="@+id/fechaInicioTarea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:textAlignment="center"
+                android:hint="Ingresa la fecha de inicio de la tarea"
+                android:inputType="date"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/importante"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="16dp"
+                tools:ignore="HardcodedText" />
+
+            <!-- Campo para la fecha de fin de la tarea -->
+            <EditText
+                android:id="@+id/fechaFinTarea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:textAlignment="center"
+                android:hint="Ingresa la fecha de fin de la tarea"
+                android:inputType="date"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/fechaInicioTarea"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="16dp"
+                tools:ignore="HardcodedText" />
+
+
+
+        </LinearLayout>
+    </android.widget.ScrollView>
+
+    <!-- Botón para añadir tarea -->
+    <Button
+        android:id="@+id/GuardarTarea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#95aa61"
+        android:text="Añadir Tarea"
+        app:layout_constraintTop_toBottomOf="@id/scrollView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.escom7cv1.proyectotodo.R
 import com.escom7cv1.proyectotodo.databinding.FragmentGalleryBinding
+import com.escom7cv1.proyectotodo.ui.crearTarea.CrearTareaFragment
 
 class GalleryFragment : Fragment() {
 
@@ -31,6 +34,17 @@ private var _binding: FragmentGalleryBinding? = null
     galleryViewModel.text.observe(viewLifecycleOwner) {
       textView.text = it
     }
+
+    val aniadirTareaBoton: Button = binding.aniadirTarea
+
+    aniadirTareaBoton.setOnClickListener { view ->
+        val fragment = CrearTareaFragment()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment_content_main, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     return root
   }
 
