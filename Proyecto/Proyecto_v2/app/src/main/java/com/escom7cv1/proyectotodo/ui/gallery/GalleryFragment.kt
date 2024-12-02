@@ -37,10 +37,10 @@ private var _binding: FragmentGalleryBinding? = null
 
     val aniadirTareaBoton: Button = binding.aniadirTarea
 
-    aniadirTareaBoton.setOnClickListener { view ->
-        val fragment = CrearTareaFragment()
+    aniadirTareaBoton.setOnClickListener {
+        val crearTareaFragment = CrearTareaFragment()
         parentFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment_content_main, fragment)
+            .replace(R.id.nav_host_fragment_content_main, crearTareaFragment)
             .addToBackStack(null)
             .commit()
     }
