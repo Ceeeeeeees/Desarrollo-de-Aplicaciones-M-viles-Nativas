@@ -22,4 +22,17 @@
         android:name="com.escom7cv1.proyectotodo.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_agregarLista"
+        android:name="com.escom7cv1.proyectotodo.ui.lista.ListaAgregar"
+        android:label="@string/menu_agregarLista"
+        tools:layout="@layout/fragment_lista" />
+
+    <fragment
+        android:id="@+id/nav_crearTarea"
+        android:name="com.escom7cv1.proyectotodo.ui.crearTarea.CrearTareaFragment"
+        android:label="@string/menu_crearTarea"
+        tools:layout="@layout/fragment_creartarea" />
+
 </navigation>

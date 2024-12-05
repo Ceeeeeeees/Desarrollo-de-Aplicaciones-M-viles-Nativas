@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.escom7cv1.proyectotodo.R
 import com.escom7cv1.proyectotodo.databinding.FragmentGalleryBinding
 import com.escom7cv1.proyectotodo.ui.crearTarea.CrearTareaFragment
@@ -36,7 +37,7 @@ private var _binding: FragmentGalleryBinding? = null
     }
 
     val aniadirTareaBoton: Button = binding.aniadirTarea
-
+    /*
     aniadirTareaBoton.setOnClickListener {
         val crearTareaFragment = CrearTareaFragment()
         parentFragmentManager.beginTransaction()
@@ -44,8 +45,13 @@ private var _binding: FragmentGalleryBinding? = null
             .addToBackStack(null)
             .commit()
     }
+    */
+    aniadirTareaBoton.setOnClickListener {
+        findNavController().navigate(R.id.nav_crearTarea)
+    }
 
-    return root
+
+      return root
   }
 
 override fun onDestroyView() {
