@@ -11,4 +11,5 @@
     <string name="menu_gallery">Mi día</string>
     <string name="menu_slideshow">Importante</string>
     <string name="menu_agregarLista">Agregar Lista</string>
+    <string name="menu_crearTarea">Crear Tarea</string>
 </resources>
