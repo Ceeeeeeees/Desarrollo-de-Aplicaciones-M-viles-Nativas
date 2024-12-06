@@ -15,7 +15,23 @@
         android:id="@+id/nav_gallery"
         android:name="com.escom7cv1.proyectotodo.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery">
+
+        <action
+            android:id="@+id/actionGalleryFragmentToTareaFragment"
+            app:destination="@id/nav_tareaDetalles">
+            <!-- Argumentos que quieres pasar -->
+            <argument
+                android:name="nombre"
+                app:argType="string" />
+            <argument
+                android:name="fechaInicio"
+                app:argType="string" />
+            <argument
+                android:name="fechaFin"
+                app:argType="string" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -34,5 +50,22 @@
         android:name="com.escom7cv1.proyectotodo.ui.crearTarea.CrearTareaFragment"
         android:label="@string/menu_crearTarea"
         tools:layout="@layout/fragment_creartarea" />
+
+    <fragment
+        android:id="@+id/nav_tareaDetalles"
+        android:name="com.escom7cv1.proyectotodo.ui.tarea.TareaFragment"
+        android:label="Detalles de tarea"
+        tools:layout="@layout/fragment_tarea">
+        <!-- Argumentos que recibe -->
+        <argument
+            android:name="nombre"
+            app:argType="string" />
+        <argument
+            android:name="fechaInicio"
+            app:argType="string" />
+        <argument
+            android:name="fechaFin"
+            app:argType="string" />
+    </fragment>
 
 </navigation>
