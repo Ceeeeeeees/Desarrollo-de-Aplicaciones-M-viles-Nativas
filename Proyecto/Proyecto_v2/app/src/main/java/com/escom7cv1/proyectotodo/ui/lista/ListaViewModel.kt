@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class ListaViewModel : ViewModel() {
 
         private val _text = MutableLiveData<String>().apply {
-            value = "This is lista Fragment"
+            value = "Ingresa el nombre de tu nueva lista"
         }
         val text: LiveData<String> = _text
 }
