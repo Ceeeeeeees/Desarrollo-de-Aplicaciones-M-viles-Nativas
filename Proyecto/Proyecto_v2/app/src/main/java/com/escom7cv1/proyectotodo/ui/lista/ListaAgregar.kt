@@ -39,6 +39,9 @@ class ListaAgregar : Fragment() {
             findNavController().navigate(R.id.nav_home)
         }
 
+        btnAceptar.setOnClickListener {
+
+        }
 
         return root
     }

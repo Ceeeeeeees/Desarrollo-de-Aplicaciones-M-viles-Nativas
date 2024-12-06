@@ -11,15 +11,15 @@
     <android.widget.ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="625dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@id/aniadirTarea"
-        android:fillViewport="true">
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- Contenedor vertical para los elementos dentro del ScrollView -->
         <LinearLayout
-            android:id="@+id/contenedorTareas"
+            android:id="@+id/contenedorTarea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -32,9 +32,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:textAlignment="center"
-                android:textSize="20sp"
-                android:gravity="center" />
+                android:textSize="20sp" />
 
             <!-- Aquí van las tareas dinámicas -->
             <!-- Los Checkboxes se agregarán dinámicamente en el código Kotlin -->
@@ -45,14 +45,14 @@
     <!-- Botón para añadir tarea -->
     <Button
         android:id="@+id/aniadirTarea"
-        android:layout_width="match_parent"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#95aa61"
         android:text="Añadir Tarea"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
