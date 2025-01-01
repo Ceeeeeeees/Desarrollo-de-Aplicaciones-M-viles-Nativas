@@ -32,9 +32,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="30dp"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="26sp"
+                />
 
             <!-- Aquí van las tareas dinámicas -->
             <!-- Los Checkboxes se agregarán dinámicamente en el código Kotlin -->

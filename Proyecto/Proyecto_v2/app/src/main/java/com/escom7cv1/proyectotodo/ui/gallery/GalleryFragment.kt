@@ -9,6 +9,7 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -65,13 +66,12 @@ class GalleryFragment : Fragment() {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
-                )
+                ).apply {
+                    leftMargin = 30
+                    bottomMargin = 40
+                }
                 setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) {
-                        Toast.makeText(context, "Tarea completada: ${tarea.nombre}", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Tarea desmarcada: ${tarea.nombre}", Toast.LENGTH_SHORT).show()
-                    }
+                    showConfirmationDialog(isChecked, this, tarea)
                 }
             }
 
@@ -83,6 +83,7 @@ class GalleryFragment : Fragment() {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     1f
                 )
+
                 setOnClickListener {
                     val bundle = Bundle().apply {
                         putString("nombre", tarea.nombre)
@@ -120,6 +121,44 @@ class GalleryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showConfirmationDialog(isChecked: Boolean, checkBox: CheckBox, tarea: Tarea) {
+        val message = if (isChecked) {
+            "¿Estás seguro de marcar como FINALIZADA esta tarea?"
+        } else {
+            "¿Estás seguro de desmarcar esta tarea?"
+        }
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Confirmar acción")
+            .setMessage(message)
+            .setPositiveButton("Sí") { dialog, _ ->
+                Toast.makeText(context, "Tarea completada: ${tarea.nombre}", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+                finalizarTarea(tarea)
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                checkBox.isChecked = !isChecked
+                dialog.dismiss()
+            }
+            .create()
+
+        checkBox.setOnCheckedChangeListener(null)
+        dialog.show()
+
+        dialog.setOnDismissListener {
+            checkBox.setOnCheckedChangeListener { _, newIsChecked ->
+                showConfirmationDialog(newIsChecked, checkBox, tarea)
+            }
+        }
+    }
+
+    private fun finalizarTarea(tarea: Tarea) {
+        val bundle = Bundle().apply {
+            putString("nombre", tarea.nombre)
+        }
+        findNavController().navigate(R.id.nav_tareaCompletada, bundle)
     }
 }
 
