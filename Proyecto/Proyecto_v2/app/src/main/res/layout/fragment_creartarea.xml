@@ -49,18 +49,21 @@
             <!-- Checkbox para la importancia de la tarea -->
             <CheckBox
                 android:id="@+id/urgente"
-                android:layout_width="match_parent"
+                android:layout_width="380dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
                 android:text="Urgente"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tituloTarea" />
 
             <CheckBox
                 android:id="@+id/importante"
-                android:layout_width="match_parent"
+                android:layout_width="383dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="30dp"
                 android:text="Importante"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/urgente" />

@@ -68,4 +68,10 @@
             app:argType="string" />
     </fragment>
 
+    <fragment
+        android:id="@+id/nav_tareaCompletada"
+        android:name="com.escom7cv1.proyectotodo.ui.tarea.TareaFinalizada"
+        android:label="Tarea finalizada"
+        tools:layout="@layout/fragment_tarea_finalizada" />
+
 </navigation>
