@@ -8,14 +8,33 @@
     tools:context=".ui.gallery.GalleryFragment">
 
     <!-- Contenedor Scrollable -->
+
+    <!-- Botón para añadir tarea -->
+
+    <TextView
+        android:id="@+id/text_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <android.widget.ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="625dp"
+        android:layout_width="412dp"
+        android:layout_height="462dp"
         android:layout_marginTop="10dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/aniadirTarea"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/text_gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/aniadirTarea">
 
         <!-- Contenedor vertical para los elementos dentro del ScrollView -->
         <LinearLayout
@@ -25,6 +44,7 @@
             android:orientation="vertical">
 
             <!-- TextView para la información inicial -->
+            <!--
             <TextView
                 android:id="@+id/text_gallery"
                 android:layout_width="match_parent"
@@ -36,7 +56,7 @@
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textSize="26sp"
-                />
+                /> -->
 
             <!-- Aquí van las tareas dinámicas -->
             <!-- Los Checkboxes se agregarán dinámicamente en el código Kotlin -->
@@ -44,7 +64,6 @@
         </LinearLayout>
     </android.widget.ScrollView>
 
-    <!-- Botón para añadir tarea -->
     <Button
         android:id="@+id/aniadirTarea"
         android:layout_width="235dp"
@@ -53,8 +72,10 @@
         android:text="Añadir Tarea"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.556"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scrollView"
+        app:layout_constraintVertical_bias="0.474"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

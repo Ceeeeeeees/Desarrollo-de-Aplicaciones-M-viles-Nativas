@@ -25,6 +25,18 @@ class GalleryFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    // Las tareas se añadirán dinámicamente
+    val tareas =  mutableListOf(
+        Tarea("Comprar leche", "05/12/2024", "06/12/2024"),
+        Tarea("Hacer ejercicio", "05/12/2024", "10/12/2024"),
+        Tarea("Estudiar programación", "05/12/2024", "15/12/2024"),
+        Tarea("Reunión de trabajo", "06/12/2024", "06/12/2024"),
+        Tarea("Llamar a mamá", "06/12/2024", "06/12/2024"),
+        Tarea("Leer libro", "07/12/2024", "10/12/2024")
+    )
+
+    var nopacoins = 20
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,22 +48,38 @@ class GalleryFragment : Fragment() {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        actualizarTareas()
+
         val textView: TextView = binding.textGallery
-        val contenedorTareas: LinearLayout = binding.contenedorTarea
+
         galleryViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
 
-        // Las tareas se añadirán dinámicamente
-        val tareas = listOf(
-            Tarea("Comprar leche", "05/12/2024", "06/12/2024"),
-            Tarea("Hacer ejercicio", "05/12/2024", "10/12/2024"),
-            Tarea("Estudiar programación", "05/12/2024", "15/12/2024"),
-            Tarea("Reunión de trabajo", "06/12/2024", "06/12/2024"),
-            Tarea("Llamar a mamá", "06/12/2024", "06/12/2024"),
-            Tarea("Leer libro", "07/12/2024", "10/12/2024")
-        )
+        binding.aniadirTarea.setOnClickListener {
+            findNavController().navigate(R.id.nav_crearTarea)
+        }
+        /*
+        aniadirTareaBoton.setOnClickListener {
+            val crearTareaFragment = CrearTareaFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment_content_main, crearTareaFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+        */
 
+        return root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun actualizarTareas() {
+        val contenedorTareas: LinearLayout = binding.contenedorTarea
+        contenedorTareas.removeAllViews()
 
         for (tarea in tareas) {
             val linearLayout = LinearLayout(requireContext()).apply {
@@ -96,31 +124,8 @@ class GalleryFragment : Fragment() {
 
             linearLayout.addView(checkBox)
             linearLayout.addView(textView)
-
             contenedorTareas.addView(linearLayout)
         }
-
-        val aniadirTareaBoton: Button = binding.aniadirTarea
-        /*
-        aniadirTareaBoton.setOnClickListener {
-            val crearTareaFragment = CrearTareaFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment_content_main, crearTareaFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-        */
-        aniadirTareaBoton.setOnClickListener {
-            findNavController().navigate(R.id.nav_crearTarea)
-        }
-
-
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun showConfirmationDialog(isChecked: Boolean, checkBox: CheckBox, tarea: Tarea) {
@@ -155,10 +160,16 @@ class GalleryFragment : Fragment() {
     }
 
     private fun finalizarTarea(tarea: Tarea) {
+        nopacoins += 20
+
         val bundle = Bundle().apply {
             putString("nombre", tarea.nombre)
+            putInt("nopacoins", nopacoins)
         }
         findNavController().navigate(R.id.nav_tareaCompletada, bundle)
+
+        tareas.remove(tarea)
+        actualizarTareas()
     }
 }
 
