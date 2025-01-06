@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "planta")
-data class Planta (
+data class Planta(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     var etapaCrecimiento: Int = 0,
     var image: String = "semilla",

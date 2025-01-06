@@ -12,7 +12,7 @@ import java.util.Date
     foreignKeys = [ForeignKey(
         entity = Lista::class,
         parentColumns = arrayOf("id"),
-        childColumns = arrayOf("listId"),
+        childColumns = arrayOf("listaId"),
         onDelete = ForeignKey.CASCADE
     )]
 )

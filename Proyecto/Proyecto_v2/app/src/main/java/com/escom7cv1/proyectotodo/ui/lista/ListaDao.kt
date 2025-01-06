@@ -13,7 +13,7 @@ interface ListaDao {
     suspend fun insertLista(lista: Lista)
 
     @Query("SELECT * FROM lista")
-    suspend fun getListas(): LiveData<List<Lista>>
+    fun getListas(): LiveData<List<Lista>>
 
     @Transaction
     @Query("SELECT * FROM lista WHERE id = :listaId")
