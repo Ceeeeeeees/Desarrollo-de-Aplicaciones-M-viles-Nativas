@@ -1,7 +1,6 @@
 package com.escom7cv1.proyectotodo.ui.tarea
 
 import android.app.DatePickerDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,18 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
-import androidx.room.Dao
-import androidx.room.Database
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.Update
 import com.escom7cv1.proyectotodo.AppDatabase
 import com.escom7cv1.proyectotodo.databinding.FragmentCreartareaBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class CrearTareaFragment : Fragment() {
@@ -36,16 +25,22 @@ class CrearTareaFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var tareaViewModel: TareaViewModel
+    private var listaId: Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        tareaViewModel = ViewModelProvider(this).get(TareaViewModel::class.java)
-
-
         _binding = FragmentCreartareaBinding.inflate(inflater, container, false)
+
+        listaId = arguments?.getLong("listaId", 0) ?: 0
+
+        val database = AppDatabase.getDatabase(requireContext())
+        val repository = TareaRepository(database)
+        val factory = TareaViewModelFactory(repository)
+        tareaViewModel = ViewModelProvider(this, factory).get(TareaViewModel::class.java)
+
         val root: View = binding.root
 
         val tituloTarea: EditText = binding.tituloTarea
@@ -81,7 +76,7 @@ class CrearTareaFragment : Fragment() {
                     importante = isImportante,
                     fechaInicio = tareaFechaInicio,
                     fechaFin = tareaFechaFin,
-                    listaId = 1 // cambiar por el id correcto
+                    listaId = listaId // cambiar por el id correcto
                 )
 
                 tareaViewModel.insertTarea(tarea)

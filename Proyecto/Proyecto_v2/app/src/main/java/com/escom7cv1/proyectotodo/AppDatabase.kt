@@ -13,9 +13,13 @@ import com.escom7cv1.proyectotodo.ui.tarea.Tarea
 import com.escom7cv1.proyectotodo.ui.tarea.TareaDao
 import com.escom7cv1.proyectotodo.ui.usuario.Usuario
 import com.escom7cv1.proyectotodo.ui.usuario.UsuarioDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-
-@Database(entities = [Lista::class, Tarea::class, Planta::class, Usuario::class], version = 1)
+@Database(entities = [Lista::class, Tarea::class, Planta::class, Usuario::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun listaDao(): ListaDao
     abstract fun tareaDao(): TareaDao
@@ -30,14 +34,41 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
+                //context.deleteDatabase("app_database")
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     DATABASE_NAME
                 ).build()
                 INSTANCE = instance
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    //clearAllData(instance)
+                    initializeDatabase(context, instance)
+                }
                 instance
             }
+        }
+
+        private suspend fun initializeDatabase(context: Context, database: AppDatabase) {
+            withContext(Dispatchers.IO) {
+                val listaDao = database.listaDao()
+
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val listas = listaDao.getListas().value ?: emptyList()
+
+                    if (listas.isEmpty()) {
+                        listaDao.insertLista(Lista(nombre = "Mi día", isDefault = true))
+                        listaDao.insertLista(Lista(nombre = "Importante", isDefault = true))
+                    }
+                }
+            }
+        }
+
+        private suspend fun clearAllData(database: AppDatabase) {
+            database.listaDao().deleteAllListas()
+            database.tareaDao().deleteAllTareas()
         }
     }
 }

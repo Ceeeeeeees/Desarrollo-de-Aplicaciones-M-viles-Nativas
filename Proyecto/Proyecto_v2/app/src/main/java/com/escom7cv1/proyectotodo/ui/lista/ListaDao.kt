@@ -12,10 +12,13 @@ interface ListaDao {
     @Insert
     suspend fun insertLista(lista: Lista)
 
-    @Query("SELECT * FROM lista")
+    @Query("SELECT * FROM lista WHERE isDefault = 0")
     fun getListas(): LiveData<List<Lista>>
 
     @Transaction
     @Query("SELECT * FROM lista WHERE id = :listaId")
     suspend fun getListaTareas(listaId: Long): ListaTareas
+
+    @Query("DELETE FROM lista")
+    suspend fun deleteAllListas()
 }

@@ -7,5 +7,6 @@ import com.escom7cv1.proyectotodo.ui.tarea.Tarea
 @Entity(tableName = "lista")
 data class Lista (
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val nombre: String
+    val nombre: String,
+    val isDefault: Boolean = false
 )

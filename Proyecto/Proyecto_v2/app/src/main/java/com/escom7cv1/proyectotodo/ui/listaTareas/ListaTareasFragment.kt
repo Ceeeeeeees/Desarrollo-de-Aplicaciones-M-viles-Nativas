@@ -1,5 +1,6 @@
-package com.escom7cv1.proyectotodo.ui.gallery
+package com.escom7cv1.proyectotodo.ui.listaTareas
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,13 +16,16 @@ import androidx.navigation.fragment.findNavController
 import com.escom7cv1.proyectotodo.AppDatabase
 import com.escom7cv1.proyectotodo.R
 import com.escom7cv1.proyectotodo.databinding.FragmentGalleryBinding
-import com.escom7cv1.proyectotodo.ui.listaTareas.ListaTareas
+import com.escom7cv1.proyectotodo.ui.gallery.GalleryViewModel
 import com.escom7cv1.proyectotodo.ui.tarea.Tarea
 import com.escom7cv1.proyectotodo.ui.tarea.TareaRepository
 import com.escom7cv1.proyectotodo.ui.tarea.TareaViewModel
 import com.escom7cv1.proyectotodo.ui.tarea.TareaViewModelFactory
 
-class GalleryFragment : Fragment() {
+class ListaTareasFragment : Fragment() {
+
+    private var listaId: Long? = null
+    private var nombreLista: String? = null
 
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
@@ -29,6 +33,7 @@ class GalleryFragment : Fragment() {
     private lateinit var tareaViewModel: TareaViewModel
     var nopacoins = 20
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +45,9 @@ class GalleryFragment : Fragment() {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        listaId = arguments?.getLong("listaId")
+        nombreLista = arguments?.getString("nombreLista")
+
         val database = AppDatabase.getDatabase(requireContext())
         val repository = TareaRepository(database)
         val factory = TareaViewModelFactory(repository)
@@ -49,17 +57,17 @@ class GalleryFragment : Fragment() {
             actualizarTareas(tareas)
         }
 
-        tareaViewModel.getTareasPorLista(1)
+        tareaViewModel.getTareasPorLista(listaId!!)
 
         val textView: TextView = binding.textGallery
 
         galleryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+            textView.text = "Lista de " + nombreLista
         }
 
         binding.aniadirTarea.setOnClickListener {
             val bundle = Bundle().apply {
-                putLong("listaId", 1)
+                putLong("listaId", listaId!!)
             }
             findNavController().navigate(R.id.nav_crearTarea, bundle)
         }
@@ -164,7 +172,6 @@ class GalleryFragment : Fragment() {
         findNavController().navigate(R.id.nav_tareaCompletada, bundle)
 
         tareaViewModel.updateStatusTarea(tarea.id, true)
-        tareaViewModel.getTareasPorLista(1)  // Refresh the list
+        tareaViewModel.getTareasPorLista(listaId!!)  // Refresh the list
     }
 }
-

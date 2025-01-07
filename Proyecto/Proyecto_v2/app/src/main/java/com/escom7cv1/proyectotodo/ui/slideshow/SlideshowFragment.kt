@@ -12,11 +12,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.escom7cv1.proyectotodo.AppDatabase
 import com.escom7cv1.proyectotodo.R
 import com.escom7cv1.proyectotodo.databinding.FragmentSlideshowBinding
 import com.escom7cv1.proyectotodo.ui.lista.ListaViewModel
 import com.escom7cv1.proyectotodo.ui.tarea.Tarea
+import com.escom7cv1.proyectotodo.ui.tarea.TareaRepository
 import com.escom7cv1.proyectotodo.ui.tarea.TareaViewModel
+import com.escom7cv1.proyectotodo.ui.tarea.TareaViewModelFactory
 
 class SlideshowFragment : Fragment() {
 
@@ -36,7 +39,7 @@ private var _binding: FragmentSlideshowBinding? = null
     _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
       val root: View = binding.root
 
-    tareaViewModel = ViewModelProvider(this).get(TareaViewModel::class.java)
+    //tareaViewModel = ViewModelProvider(this).get(TareaViewModel::class.java)
     listaViewModel = ViewModelProvider(this).get(ListaViewModel::class.java)
 
     listaId = arguments?.getLong("listaId") ?: 0

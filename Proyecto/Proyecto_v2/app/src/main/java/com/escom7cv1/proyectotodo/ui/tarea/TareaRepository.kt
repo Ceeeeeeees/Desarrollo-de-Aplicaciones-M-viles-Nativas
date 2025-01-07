@@ -1,6 +1,10 @@
 package com.escom7cv1.proyectotodo.ui.tarea
 
-class TareaRepository(private val tareaDao: TareaDao) {
+import com.escom7cv1.proyectotodo.AppDatabase
+
+class TareaRepository(private val appDatabase: AppDatabase) {
+    private val tareaDao = appDatabase.tareaDao()
+
     // Get tareas de lista específica
     suspend fun getTareasPorLista(listaId: Long): List<Tarea> {
         return tareaDao.getTareasPorLista(listaId)

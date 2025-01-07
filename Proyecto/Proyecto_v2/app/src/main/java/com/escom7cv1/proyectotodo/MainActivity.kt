@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.escom7cv1.proyectotodo.databinding.ActivityMainBinding
@@ -47,10 +48,10 @@ class MainActivity : AppCompatActivity() {
         listaViewModel = ViewModelProvider(this, factory).get(ListaViewModel::class.java)
 
 
-        setUpDynamicMenu(navView, navController)
+        setUpDynamicMenu(navView, navController, drawerLayout)
     }
 
-    private fun setUpDynamicMenu(navView: NavigationView, navController: NavController) {
+    private fun setUpDynamicMenu(navView: NavigationView, navController: NavController, drawerLayout: DrawerLayout) {
         listaViewModel.allLists.observe(this) { listas ->
             val navMenu = navView.menu.findItem(R.id.nav_listas_usuario)?.subMenu
             navMenu?.clear()
@@ -59,7 +60,10 @@ class MainActivity : AppCompatActivity() {
                     ?.setOnMenuItemClickListener {
                         val bundle = Bundle()
                         bundle.putLong("listaId", lista.id)
-                        navController.navigate(R.id.nav_slideshow, bundle)
+                        bundle.putString("nombreLista", lista.nombre)
+
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                        navController.navigate(R.id.nav_listaTarea, bundle)
                         true
                     }
             }
