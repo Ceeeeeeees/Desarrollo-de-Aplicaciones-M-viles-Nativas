@@ -15,7 +15,6 @@ class ListaRepository(private val appDatabase: AppDatabase) {
         return listaDao.getListas()
     }
 
-    // Transaction query
     suspend fun getListaTareas(listaId: Long): ListaTareas {
         return listaDao.getListaTareas(listaId)
     }

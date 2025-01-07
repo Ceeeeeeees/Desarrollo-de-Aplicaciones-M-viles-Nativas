@@ -16,9 +16,19 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/important"
             android:title="@string/menu_slideshow" />
+    </group>
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_agregarLista"
             android:icon="@drawable/plus"
-            android:title="@string/menu_agregarLista" />
+            android:title="Agregar Lista" />
+        <item
+            android:id="@+id/nav_listas_usuario"
+            android:icon="@drawable/user"
+            android:title="Listas por el usuario">
+            <menu>
+                <!-- Aquí se agregarán dinámicamente las listas -->
+            </menu>
+        </item>
     </group>
 </menu>
