@@ -9,7 +9,11 @@ import kotlinx.coroutines.launch
 
 class TareaViewModel (private val tareaRepository: TareaRepository) : ViewModel() {
     private val _tareas = MutableLiveData<List<Tarea>>()
+    private val _tareasImportantes = MutableLiveData<List<Tarea>>()
+
     val tareas: LiveData<List<Tarea>> get() = _tareas
+    val tareasImportantes: LiveData<List<Tarea>> get() = _tareasImportantes
+
 
     // Insert
     fun insertTarea(tarea: Tarea) {
@@ -30,6 +34,14 @@ class TareaViewModel (private val tareaRepository: TareaRepository) : ViewModel(
     fun updateStatusTarea(tareaId: Long, completada: Boolean) {
         viewModelScope.launch {
             tareaRepository.updateStatusTarea(tareaId, completada)
+        }
+    }
+
+    // getTareasImportantes
+    fun getTareasImportantes() {
+        viewModelScope.launch {
+            val tareas = tareaRepository.getTareasImportantes()
+            _tareasImportantes.postValue(tareas) // Update LiveData with the tasks
         }
     }
 }

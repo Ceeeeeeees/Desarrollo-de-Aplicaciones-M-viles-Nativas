@@ -12,6 +12,9 @@ interface TareaDao {
     @Query("SELECT * FROM tarea WHERE listaId = :listaId AND completada = 0")
     suspend fun getTareasPorLista(listaId: Long): List<Tarea>
 
+    @Query("SELECT * FROM tarea WHERE importante = 1 OR urgente = 1")
+    suspend fun getTareasImportantes(): List<Tarea>
+
     @Query("UPDATE tarea SET completada = :completada WHERE id = :tareaId")
     suspend fun updateStatusTarea(tareaId: Long, completada: Boolean)
 

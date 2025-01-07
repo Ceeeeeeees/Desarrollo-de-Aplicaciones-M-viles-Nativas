@@ -15,8 +15,15 @@ class TareaRepository(private val appDatabase: AppDatabase) {
         tareaDao.insertTarea(tarea)
     }
 
+    // Get tareas importantes o urgentes
+    suspend fun getTareasImportantes(): List<Tarea> {
+        return tareaDao.getTareasImportantes()
+    }
+
     // Update
     suspend fun updateStatusTarea(tareaId: Long, completada: Boolean) {
         tareaDao.updateStatusTarea(tareaId, completada)
     }
+
+
 }
