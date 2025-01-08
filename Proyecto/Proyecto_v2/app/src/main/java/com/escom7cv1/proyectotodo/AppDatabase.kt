@@ -15,7 +15,6 @@ import com.escom7cv1.proyectotodo.ui.usuario.Usuario
 import com.escom7cv1.proyectotodo.ui.usuario.UsuarioDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -54,7 +53,7 @@ abstract class AppDatabase : RoomDatabase() {
         private suspend fun initializeDatabase(context: Context, database: AppDatabase) {
             withContext(Dispatchers.IO) {
                 val listaDao = database.listaDao()
-
+                 val plantaDao = database.plantaDao()
 
                 CoroutineScope(Dispatchers.IO).launch {
                     val listas = listaDao.getListas().value ?: emptyList()
@@ -62,6 +61,14 @@ abstract class AppDatabase : RoomDatabase() {
                     if (listas.isEmpty()) {
                         listaDao.insertLista(Lista(nombre = "Mi día", isDefault = true))
                         listaDao.insertLista(Lista(nombre = "Importante", isDefault = true))
+                    }
+
+                    //plantaDao.eliminarPlantas()
+
+                    val plantas = plantaDao.obtenerTodasLasPlantas() ?: emptyList()
+
+                    if (plantas.isEmpty()) {
+                        plantaDao.insertPlanta(Planta())
                     }
                 }
             }
