@@ -6,6 +6,8 @@ import com.escom7cv1.proyectotodo.ui.planta.PlantaDao
 
 class HomeRepository(private val plantaDao: PlantaDao)  {
 
-    fun obtenerPlanta() = plantaDao.obtenerPlanta()
+    fun obtenerPlanta() : Planta {
+        return  plantaDao.obtenerPlanta() ?: Planta(etapaCrecimiento = 1)
+    }
 
 }

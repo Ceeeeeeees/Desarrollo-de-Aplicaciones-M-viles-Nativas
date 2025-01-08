@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.escom7cv1.proyectotodo.ui.planta.Planta
 import com.escom7cv1.proyectotodo.ui.planta.PlantaRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -22,14 +23,12 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
     }
     val text: LiveData<String> = _text
 
-    /*fun obtenerPlanta() {
-        val exceptionHandler = CoroutineExceptionHandler() { _, throwable ->
-            Log.e("CoroutineExceptionHandler", "Error capturado: ${throwable.message}")
+    fun cargarPlanta () {
+        viewModelScope.launch (Dispatchers.IO) {
+            val plantaCargada = repository.obtenerPlanta()
+            _planta.postValue(plantaCargada!!!!)
         }
-        CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            _planta.postValue(repository.obtenerPlanta())
-        }
-    }*/
+    }
 }
 
 class HomeViewModelFactory(private val repository: HomeRepository) : ViewModelProvider.Factory {

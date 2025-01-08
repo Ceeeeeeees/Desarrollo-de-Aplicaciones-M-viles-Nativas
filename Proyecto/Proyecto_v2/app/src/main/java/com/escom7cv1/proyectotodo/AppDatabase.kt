@@ -67,7 +67,7 @@ abstract class AppDatabase : RoomDatabase() {
                     val plantas = plantaDao.obtenerTodasLasPlantas() ?: emptyList()
 
                     if (plantas.isEmpty()) {
-                        plantaDao.insertPlanta(Planta())
+                        plantaDao.insertPlanta(Planta(etapaCrecimiento = 1))
                     }
                 }
             }

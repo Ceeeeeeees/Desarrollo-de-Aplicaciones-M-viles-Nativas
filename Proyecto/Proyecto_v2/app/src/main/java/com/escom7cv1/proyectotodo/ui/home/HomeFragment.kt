@@ -38,6 +38,9 @@ private var _binding: FragmentHomeBinding? = null
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        //Cargar la planta
+        homeViewModel.cargarPlanta()
+
         //Obtener los elementos de la vista
         homeViewModel.planta.observe(viewLifecycleOwner) { planta ->
             val imageView = binding.planta
