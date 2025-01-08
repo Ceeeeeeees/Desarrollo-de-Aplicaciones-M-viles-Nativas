@@ -8,5 +8,6 @@ data class Planta(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     var etapaCrecimiento: Int = 0,
     var image: String = "semilla",
-    val puntosRestauracion: Int = 100
+    val puntosRestauracion: Int = 100,
+    val puntos: Int = 0
 )

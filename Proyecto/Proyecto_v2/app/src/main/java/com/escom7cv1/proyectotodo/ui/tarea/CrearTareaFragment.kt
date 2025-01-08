@@ -87,6 +87,9 @@ class CrearTareaFragment : Fragment() {
                 Toast.makeText(requireContext(), "Favor de llenar todos los campos", Toast.LENGTH_SHORT).show()
             }
 
+            requireActivity().supportFragmentManager.popBackStack()
+
+
         }
 
 
