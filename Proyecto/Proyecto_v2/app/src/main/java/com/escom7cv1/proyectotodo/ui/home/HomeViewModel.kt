@@ -24,9 +24,30 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
     val text: LiveData<String> = _text
 
     fun cargarPlanta () {
-        viewModelScope.launch (Dispatchers.IO) {
+        val exceptionHandler = CoroutineExceptionHandler() { _, throwable ->
+            println("Se murio potter")
+            Log.e("CoroutineExceptionHandler", "Error capturado: ${throwable.message}")
+        }
+        CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val plantaCargada = repository.obtenerPlanta()
-            _planta.postValue(plantaCargada!!!!)
+            _planta.postValue(plantaCargada)
+        }
+    }
+
+    fun actualizarPlanta (planta: Planta) {
+        viewModelScope.launch (Dispatchers.IO) {
+            val plantaActual = repository.obtenerPlanta() ?: Planta ()
+            val puntos = planta.puntos
+            plantaActual.etapaCrecimiento = when {
+                puntos < 20 -> 1
+                puntos in 20..39 -> 2
+                puntos in 40..59 -> 3
+                puntos in 60..79 -> 4
+                puntos in 80..99 -> 5
+                else -> 1
+            }
+            repository.actualizarPlanta(plantaActual)
+            _planta.postValue(plantaActual)
         }
     }
 }

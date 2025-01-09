@@ -38,11 +38,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     DATABASE_NAME
-                ).fallbackToDestructiveMigration().build()
+                ).build()
                 INSTANCE = instance
-
                 CoroutineScope(Dispatchers.IO).launch {
-                    //clearAllData(instance)
                     initializeDatabase(context, instance)
                 }
                 instance
@@ -52,23 +50,20 @@ abstract class AppDatabase : RoomDatabase() {
         private suspend fun initializeDatabase(context: Context, database: AppDatabase) {
             withContext(Dispatchers.IO) {
                 val listaDao = database.listaDao()
-                 val plantaDao = database.plantaDao()
-
+                val plantaDao = database.plantaDao()
+                val usuarioDao = database.usuarioDao()
                 CoroutineScope(Dispatchers.IO).launch {
-                    val listas = listaDao.getListas().value ?: emptyList()
-
-                    if (listas.isEmpty()) {
+                    val listas = listaDao.getListasNoDefault().size
+                    if (listas == 0) {
                         listaDao.insertLista(Lista(nombre = "Mi día", isDefault = true))
                         listaDao.insertLista(Lista(nombre = "Importante", isDefault = true))
                     }
-
-                    //plantaDao.eliminarPlantas()
-
+                    val user = Usuario(1,0,1)
                     val plantas = plantaDao.obtenerTodasLasPlantas() ?: emptyList()
-
                     if (plantas.isEmpty()) {
                         plantaDao.insertPlanta(Planta(etapaCrecimiento = 1))
                     }
+                    //usuarioDao.insertUser(user)
                 }
             }
         }

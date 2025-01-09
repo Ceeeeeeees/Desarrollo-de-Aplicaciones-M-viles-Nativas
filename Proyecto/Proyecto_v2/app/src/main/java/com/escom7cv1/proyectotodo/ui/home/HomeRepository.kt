@@ -10,4 +10,7 @@ class HomeRepository(private val plantaDao: PlantaDao)  {
         return  plantaDao.obtenerPlanta() ?: Planta(etapaCrecimiento = 1)
     }
 
+    fun actualizarPlanta(planta: Planta) {
+        plantaDao.actualizarPlanta(planta)
+    }
 }

@@ -13,6 +13,9 @@ interface UsuarioDao {
     @Query("SELECT * FROM usuario WHERE id = :userId")
     suspend fun getUserById(userId: Long): Usuario
 
+    @Query("SELECT nopacoins FROM usuario WHERE id = 1")
+    suspend fun getNopacoins(): Int
+
     @Query("UPDATE usuario SET nopacoins = :nopacoins WHERE id = :userId")
     suspend fun updateUserPoints(userId: Long, nopacoins: Int)
 

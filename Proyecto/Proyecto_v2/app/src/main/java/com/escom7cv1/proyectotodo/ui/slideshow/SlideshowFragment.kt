@@ -57,7 +57,7 @@ class SlideshowFragment : Fragment() {
     val textView: TextView = binding.textGallery
 
     galleryViewModel.text.observe(viewLifecycleOwner) {
-      textView.text = "Importante"
+      textView.text = "Importante o Urgente"
     }
 
     /*
