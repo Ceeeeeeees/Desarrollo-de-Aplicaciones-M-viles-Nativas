@@ -15,6 +15,10 @@ class ListaRepository(private val appDatabase: AppDatabase) {
         return listaDao.getListas()
     }
 
+    suspend fun getListasNoDefault(): List<Lista> {
+        return listaDao.getListasNoDefault()
+    }
+
     suspend fun getListaTareas(listaId: Long): ListaTareas {
         return listaDao.getListaTareas(listaId)
     }

@@ -15,6 +15,9 @@ interface ListaDao {
     @Query("SELECT * FROM lista WHERE isDefault = 0")
     fun getListas(): LiveData<List<Lista>>
 
+    @Query("SELECT * FROM lista WHERE isDefault = 1")
+    fun getListasNoDefault(): List<Lista>
+
     @Transaction
     @Query("SELECT * FROM lista WHERE id = :listaId")
     suspend fun getListaTareas(listaId: Long): ListaTareas

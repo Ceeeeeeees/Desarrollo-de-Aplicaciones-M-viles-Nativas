@@ -9,5 +9,5 @@ data class Planta(
     var etapaCrecimiento: Int = 0,
     var image: String = "semilla",
     val puntosRestauracion: Int = 100,
-    val puntos: Int = 0
+    var puntos: Int = 0
 )

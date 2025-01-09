@@ -72,6 +72,22 @@ class ListaTareasFragment : Fragment() {
             findNavController().navigate(R.id.nav_crearTarea, bundle)
         }
 
+        binding.eliminarLista.setOnClickListener {
+            val dialog = AlertDialog.Builder(requireContext())
+                .setTitle("Eliminar lista")
+                .setMessage("¿Estás seguro de eliminar la lista $nombreLista?")
+                .setPositiveButton("Sí") { dialog, _ ->
+                    Toast.makeText(context, "Lista eliminada: $nombreLista", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                    findNavController().popBackStack()
+                }
+                .setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+            dialog.show()
+        }
+
         return root
     }
 

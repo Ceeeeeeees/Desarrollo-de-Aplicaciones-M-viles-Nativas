@@ -1,6 +1,7 @@
 package com.escom7cv1.proyectotodo.ui.gallery
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +12,28 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.escom7cv1.proyectotodo.AppDatabase
 import com.escom7cv1.proyectotodo.R
 import com.escom7cv1.proyectotodo.databinding.FragmentGalleryBinding
 import com.escom7cv1.proyectotodo.ui.listaTareas.ListaTareas
+import com.escom7cv1.proyectotodo.ui.planta.PlantaRepository
+import com.escom7cv1.proyectotodo.ui.planta.PlantaViewModel
+import com.escom7cv1.proyectotodo.ui.planta.PlantaViewModelFactory
 import com.escom7cv1.proyectotodo.ui.tarea.Tarea
 import com.escom7cv1.proyectotodo.ui.tarea.TareaRepository
 import com.escom7cv1.proyectotodo.ui.tarea.TareaViewModel
 import com.escom7cv1.proyectotodo.ui.tarea.TareaViewModelFactory
+import com.escom7cv1.proyectotodo.ui.usuario.UsuarioRepository
+import com.escom7cv1.proyectotodo.ui.usuario.UsuarioViewModel
+import com.escom7cv1.proyectotodo.ui.usuario.UsuarioViewModelFactory
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class GalleryFragment : Fragment() {
 
@@ -27,7 +41,9 @@ class GalleryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var tareaViewModel: TareaViewModel
-    var nopacoins = 20
+    private lateinit var usuarioViewModel: UsuarioViewModel
+
+    private lateinit var plantaViewModel: PlantaViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +60,10 @@ class GalleryFragment : Fragment() {
         val repository = TareaRepository(database)
         val factory = TareaViewModelFactory(repository)
         tareaViewModel = ViewModelProvider(this, factory).get(TareaViewModel::class.java)
+
+        val repository2 = PlantaRepository(database)
+        val factory2 = PlantaViewModelFactory(repository2)
+        plantaViewModel = ViewModelProvider(this, factory2).get(PlantaViewModel::class.java)
 
         tareaViewModel.tareas.observe(viewLifecycleOwner) { tareas ->
             actualizarTareas(tareas)
@@ -155,16 +175,41 @@ class GalleryFragment : Fragment() {
     }
 
     private fun finalizarTarea(tarea: Tarea) {
-        nopacoins += 20
-
-        val bundle = Bundle().apply {
-            putString("nombre", tarea.nombre)
-            putInt("nopacoins", nopacoins)
+        val exceptionHandler = CoroutineExceptionHandler() { _, throwable ->
+            Log.e("CoroutineExceptionHandler", "Error capturado: ${throwable.message}")
         }
-        findNavController().navigate(R.id.nav_tareaCompletada, bundle)
+        CoroutineScope(Dispatchers.IO + exceptionHandler).launch() {
+            val planta = plantaViewModel.getPuntos();
+            var nopacoins = planta.puntos
+            nopacoins += 20
 
-        tareaViewModel.updateStatusTarea(tarea.id, true)
-        tareaViewModel.getTareasPorLista(1)  // Refresh the list
+            if (nopacoins <= 19) {
+                planta.etapaCrecimiento = 1
+            } else if (nopacoins in 20..39) {
+                planta.etapaCrecimiento = 2
+            } else if (nopacoins in 40..59) {
+                planta.etapaCrecimiento = 3
+            } else if (nopacoins in 60..79) {
+                planta.etapaCrecimiento = 4
+            } else if (nopacoins in 80..99)  {
+                planta.etapaCrecimiento = 5
+            } else {
+                planta.etapaCrecimiento = 5
+            }
+
+            planta.puntos = nopacoins
+
+            plantaViewModel.updatePuntos(planta)
+            tareaViewModel.updateStatusTarea(tarea.id, true)
+            tareaViewModel.getTareasPorLista(1)
+            withContext(Dispatchers.Main) {
+                val bundle = Bundle().apply {
+                    putString("nombre", tarea.nombre)
+                    putInt("nopacoins", nopacoins)
+                }
+                findNavController().navigate(R.id.nav_tareaCompletada, bundle)
+            }
+        }
     }
 }
 
