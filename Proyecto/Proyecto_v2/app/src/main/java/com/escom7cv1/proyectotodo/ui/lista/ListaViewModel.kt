@@ -37,12 +37,16 @@ class ListaViewModel(private val listaRepository: ListaRepository) : ViewModel()
         }
     }
 
-
-
     // Get Lista con tareas
     fun getListaTareas(listaId: Long) {
         viewModelScope.launch {
             val listaTareas = listaRepository.getListaTareas(listaId)
+        }
+    }
+
+    fun eliminarListaById(listaId: Long) {
+        viewModelScope.launch {
+            listaRepository.eliminarListaById(listaId)
         }
     }
 }

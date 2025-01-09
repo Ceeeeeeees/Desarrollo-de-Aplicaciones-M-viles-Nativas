@@ -21,6 +21,6 @@ interface TareaDao {
     @Query("DELETE FROM tarea")
     suspend fun deleteAllTareas()
 
-    @Query("DELETE FROM tarea WHERE listaId = :listaID")
-    suspend fun eliminarTarea(listaID: Long)
+    /*@Query("DELETE FROM tarea WHERE listaId = :listaID")
+    suspend fun eliminarTarea(listaID: Long)*/
 }

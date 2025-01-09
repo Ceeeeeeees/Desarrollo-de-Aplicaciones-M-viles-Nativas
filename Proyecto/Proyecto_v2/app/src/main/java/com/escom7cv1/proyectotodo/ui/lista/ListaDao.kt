@@ -22,6 +22,9 @@ interface ListaDao {
     @Query("SELECT * FROM lista WHERE id = :listaId")
     suspend fun getListaTareas(listaId: Long): ListaTareas
 
+    @Query("DELETE FROM lista WHERE id = :listaId")
+    suspend fun eliminarListaById(listaId: Long)
+
     @Query("DELETE FROM lista")
     suspend fun deleteAllListas()
 }

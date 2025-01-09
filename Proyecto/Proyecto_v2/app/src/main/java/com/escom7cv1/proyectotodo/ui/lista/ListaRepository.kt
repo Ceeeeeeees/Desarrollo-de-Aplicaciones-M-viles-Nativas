@@ -22,4 +22,8 @@ class ListaRepository(private val appDatabase: AppDatabase) {
     suspend fun getListaTareas(listaId: Long): ListaTareas {
         return listaDao.getListaTareas(listaId)
     }
+
+    suspend fun eliminarListaById(listaId: Long) {
+        listaDao.eliminarListaById(listaId)
+    }
 }

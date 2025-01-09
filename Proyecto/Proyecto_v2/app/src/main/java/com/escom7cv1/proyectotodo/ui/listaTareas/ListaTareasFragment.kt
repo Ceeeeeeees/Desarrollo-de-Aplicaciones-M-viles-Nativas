@@ -17,6 +17,9 @@ import com.escom7cv1.proyectotodo.AppDatabase
 import com.escom7cv1.proyectotodo.R
 import com.escom7cv1.proyectotodo.databinding.FragmentGalleryBinding
 import com.escom7cv1.proyectotodo.ui.gallery.GalleryViewModel
+import com.escom7cv1.proyectotodo.ui.lista.ListaRepository
+import com.escom7cv1.proyectotodo.ui.lista.ListaViewModel
+import com.escom7cv1.proyectotodo.ui.lista.ListaViewModelFactory
 import com.escom7cv1.proyectotodo.ui.tarea.Tarea
 import com.escom7cv1.proyectotodo.ui.tarea.TareaRepository
 import com.escom7cv1.proyectotodo.ui.tarea.TareaViewModel
@@ -53,6 +56,10 @@ class ListaTareasFragment : Fragment() {
         val factory = TareaViewModelFactory(repository)
         tareaViewModel = ViewModelProvider(this, factory).get(TareaViewModel::class.java)
 
+        val listaRepository = ListaRepository(database)
+        val listaFactory = ListaViewModelFactory(listaRepository)
+        val listaViewModel = ViewModelProvider(this, listaFactory).get(ListaViewModel::class.java)
+
         tareaViewModel.tareas.observe(viewLifecycleOwner) { tareas ->
             actualizarTareas(tareas)
         }
@@ -73,19 +80,22 @@ class ListaTareasFragment : Fragment() {
         }
 
         binding.eliminarLista.setOnClickListener {
-            val dialog = AlertDialog.Builder(requireContext())
-                .setTitle("Eliminar lista")
-                .setMessage("¿Estás seguro de eliminar la lista $nombreLista?")
-                .setPositiveButton("Sí") { dialog, _ ->
-                    Toast.makeText(context, "Lista eliminada: $nombreLista", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
-                    findNavController().popBackStack()
-                }
-                .setNegativeButton("No") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .create()
-            dialog.show()
+            if (listaId != null) {
+                val dialog = AlertDialog.Builder(requireContext())
+                    .setTitle("Confirmar acción")
+                    .setMessage("¿Estás seguro de eliminar la lista $nombreLista?")
+                    .setPositiveButton("Sí") { dialog, _ ->
+                        listaViewModel.eliminarListaById(listaId!!)
+                        Toast.makeText(context, "Lista eliminada: $nombreLista", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                        findNavController().popBackStack()
+                    }
+                    .setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .create()
+                dialog.show()
+            }
         }
 
         return root
