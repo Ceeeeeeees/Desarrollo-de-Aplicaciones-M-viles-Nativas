@@ -10,12 +10,18 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import com.escom7cv1.proyectotodo.databinding.ActivityMainBinding
+import com.escom7cv1.proyectotodo.ui.lista.ListaRepository
+import com.escom7cv1.proyectotodo.ui.lista.ListaViewModel
+import com.escom7cv1.proyectotodo.ui.lista.ListaViewModelFactory
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
-private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var listaViewModel: ListaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +37,37 @@ private lateinit var binding: ActivityMainBinding
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
+            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,  R.id.nav_crearTarea), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Inicializar ViewModel de Lista
+        val database = AppDatabase.getDatabase(this)
+        val repository = ListaRepository(database)
+        val factory = ListaViewModelFactory(repository)
+        listaViewModel = ViewModelProvider(this, factory).get(ListaViewModel::class.java)
+
+
+        setUpDynamicMenu(navView, navController, drawerLayout)
+    }
+
+    private fun setUpDynamicMenu(navView: NavigationView, navController: NavController, drawerLayout: DrawerLayout) {
+        listaViewModel.allLists.observe(this) { listas ->
+            val navMenu = navView.menu.findItem(R.id.nav_listas_usuario)?.subMenu
+            navMenu?.clear()
+            listas.forEach { lista ->
+                navMenu?.add(R.id.nav_listas_usuario, lista.id.toInt(), 0, lista.nombre)
+                    ?.setOnMenuItemClickListener {
+                        val bundle = Bundle()
+                        bundle.putLong("listaId", lista.id)
+                        bundle.putString("nombreLista", lista.nombre)
+
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                        navController.navigate(R.id.nav_listaTarea, bundle)
+                        true
+                    }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.slideshow.SlideshowFragment" >
 
+    <!--
     <TextView
         android:id="@+id/text_slideshow"
         android:layout_width="match_parent"
@@ -20,4 +21,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+    -->
+    <!-- Contenedor Scrollable -->
+    <android.widget.ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="625dp"
+        android:layout_marginTop="10dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/aniadirTareaImportante"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Contenedor vertical para los elementos dentro del ScrollView -->
+        <LinearLayout
+            android:id="@+id/contenedorTareasImportantes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- TextView para la información inicial -->
+            <TextView
+                android:id="@+id/text_slideshow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <!-- Aquí van las tareas dinámicas -->
+            <!-- Los Checkboxes se agregarán dinámicamente en el código Kotlin -->
+
+        </LinearLayout>
+    </android.widget.ScrollView>
+
+    <!-- Botón para añadir tarea -->
+    <Button
+        android:id="@+id/aniadirTareaImportante"
+        android:layout_width="232dp"
+        android:layout_height="44dp"
+        android:backgroundTint="#95aa61"
+        android:text="Añadir Tarea"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView"
+        tools:ignore="HardcodedText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,11 +15,76 @@
         android:id="@+id/nav_gallery"
         android:name="com.escom7cv1.proyectotodo.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery">
+
+        <action
+            android:id="@+id/actionGalleryFragmentToTareaFragment"
+            app:destination="@id/nav_tareaDetalles">
+            <!-- Argumentos que quieres pasar -->
+            <argument
+                android:name="nombre"
+                app:argType="string" />
+            <argument
+                android:name="fechaInicio"
+                app:argType="string" />
+            <argument
+                android:name="fechaFin"
+                app:argType="string" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.escom7cv1.proyectotodo.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_agregarLista"
+        android:name="com.escom7cv1.proyectotodo.ui.lista.ListaAgregar"
+        android:label="@string/menu_agregarLista"
+        tools:layout="@layout/fragment_lista" />
+
+    <fragment
+        android:id="@+id/nav_crearTarea"
+        android:name="com.escom7cv1.proyectotodo.ui.tarea.CrearTareaFragment"
+        android:label="@string/menu_crearTarea"
+        tools:layout="@layout/fragment_creartarea" />
+
+    <fragment
+        android:id="@+id/nav_tareaDetalles"
+        android:name="com.escom7cv1.proyectotodo.ui.tarea.TareaFragment"
+        android:label="Detalles de tarea"
+        tools:layout="@layout/fragment_tarea">
+        <!-- Argumentos que recibe -->
+        <argument
+            android:name="nombre"
+            app:argType="string" />
+        <argument
+            android:name="fechaInicio"
+            app:argType="string" />
+        <argument
+            android:name="fechaFin"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_tareaCompletada"
+        android:name="com.escom7cv1.proyectotodo.ui.tarea.TareaFinalizadaFragment"
+        android:label="Tarea finalizada"
+        tools:layout="@layout/fragment_tarea_finalizada" />
+
+    <fragment
+        android:id="@+id/nav_listaTarea"
+        android:name="com.escom7cv1.proyectotodo.ui.listaTareas.ListaTareasFragment"
+        tools:layout="@layout/fragment_gallery">
+        <!-- Define the arguments you will receive -->
+        <argument
+            android:name="listaId"
+            app:argType="long" />
+        <argument
+            android:name="nombreLista"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

@@ -1,6 +1,6 @@
-package com.escom7cv1.proyectotodo.ui.crearTarea
+package com.escom7cv1.proyectotodo.ui.tarea
 
-import android.content.Context
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,41 +15,50 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
-import androidx.room.Dao
-import androidx.room.Database
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.Update
+import com.escom7cv1.proyectotodo.AppDatabase
 import com.escom7cv1.proyectotodo.databinding.FragmentCreartareaBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class CrearTareaFragment : Fragment() {
 
     private var _binding: FragmentCreartareaBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var tareaViewModel: TareaViewModel
+    private var listaId: Long = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val creartareaViewModel =
-            ViewModelProvider(this).get(CreartareaViewModel::class.java)
-
         _binding = FragmentCreartareaBinding.inflate(inflater, container, false)
+
+        listaId = arguments?.getLong("listaId", 0) ?: 0
+
+        val database = AppDatabase.getDatabase(requireContext())
+        val repository = TareaRepository(database)
+        val factory = TareaViewModelFactory(repository)
+        tareaViewModel = ViewModelProvider(this, factory).get(TareaViewModel::class.java)
+
         val root: View = binding.root
 
         val tituloTarea: EditText = binding.tituloTarea
         val urgenteCheckBox: CheckBox = binding.urgente
         val importanteCheckBox: CheckBox = binding.importante
-        val fechaInicioTarea: EditText = binding.fechaInicioTarea
-        val fechaFinTarea: EditText = binding.fechaFinTarea
+        val fechaInicioTarea: TextView = binding.fechaInicioTarea
+        val btnFechaInicioTarea: Button = binding.btnFechaInicioTarea
+        val fechaFinTarea: TextView = binding.fechaFinTarea
+        val btnFechaFinTarea: Button = binding.btnFechaFinTarea
         val guardarTareaBoton: Button = binding.GuardarTarea
+
+        btnFechaInicioTarea.setOnClickListener {
+            showDatePicker(fechaInicioTarea)
+        }
+
+        btnFechaFinTarea.setOnClickListener {
+            showDatePicker(fechaFinTarea)
+        }
 
         guardarTareaBoton.setOnClickListener {
             val tareaTitulo = tituloTarea.text.toString()
@@ -62,44 +71,54 @@ class CrearTareaFragment : Fragment() {
             if (tareaTitulo.isNotEmpty() && tareaFechaInicio.isNotEmpty() && tareaFechaFin.isNotEmpty()) {
 
                 val tarea = Tarea(
-                    titulo = tareaTitulo,
+                    nombre = tareaTitulo,
                     urgente = isUrgente,
                     importante = isImportante,
                     fechaInicio = tareaFechaInicio,
-                    fechaFin = tareaFechaFin
+                    fechaFin = tareaFechaFin,
+                    listaId = listaId // cambiar por el id correcto
                 )
 
-                guardarTareaBaseDatos(tarea)
-
+                tareaViewModel.insertTarea(tarea)
                 limpiarCampos()
 
                 Toast.makeText(requireContext(), "Tarea '$tareaTitulo' guardada", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Favor de llenar todos los campos", Toast.LENGTH_SHORT).show()
             }
+
+            requireActivity().supportFragmentManager.popBackStack()
+
+
         }
+
+
+
+
         return root
     }
 
-    private fun guardarTareaBaseDatos(tarea: Tarea) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val db = AppDatabase
-                .database(requireContext())
+    private fun showDatePicker(textView: TextView) {
+        val c = Calendar.getInstance()
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        val month = c.get(Calendar.MONTH)
+        val year = c.get(Calendar.YEAR)
 
-            db.tareaDao().insert(tarea)
-        }
+        val date = DatePickerDialog(requireContext(), android.R.style.ThemeOverlay, DatePickerDialog.OnDateSetListener { _, Year, Month, Day ->
+            textView.text = "$Day / ${Month + 1} / $Year"
+        }, year, month, day)
+        date.show()
     }
 
     private fun limpiarCampos() {
         binding.tituloTarea.text.clear()
         binding.urgente.isChecked = false
         binding.importante.isChecked = false
-        binding.fechaInicioTarea.text.clear()
-        binding.fechaFinTarea.text.clear()
+        //binding.fechaInicioTarea.text.clear()
+        //binding.fechaFinTarea.text.clear()
     }
 
 }
-
 
 class CreartareaViewModel : ViewModel() {
 
@@ -109,44 +128,3 @@ class CreartareaViewModel : ViewModel() {
     val text: LiveData<String> = _text
 
 }
-
-
-data class Tarea(
-    val titulo: String,
-    val urgente: Boolean,
-    val importante: Boolean,
-    val fechaInicio: String,
-    val fechaFin: String
-)
-
-@Dao
-interface TareaDao {
-    @Insert
-    suspend fun insert(tarea: Tarea)
-
-    @Update
-    suspend fun update(tarea: Tarea)
-
-    @Delete
-    suspend fun delete(tarea: Tarea)
-
-    @Query("SELECT * FROM tarea")
-    fun getAll(): LiveData<List<Tarea>>
-}
-
-@Database(entities = [Tarea::class], version = 1)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun tareaDao(): TareaDao
-
-    companion object {
-        fun database(context: Context): AppDatabase {
-            return Room.databaseBuilder(
-                context,
-                AppDatabase::class.java,
-                "tarea-db"
-            ).build()
-        }
-    }
-}
-
-
